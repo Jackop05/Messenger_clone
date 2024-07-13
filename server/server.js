@@ -25,6 +25,7 @@ connectDB().then(() => {
 });
 
 // Routes
+/*
 const authUserRoutes = require('./routes/authUser');
 const conversationRoutes = require('./routes/conversations');
 const getDataRoutes = require('./routes/getData');
@@ -36,7 +37,7 @@ app.use('/api/data', getDataRoutes);
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/images', imageRoutes);
-
+*/
 
 // Error handling middleware
 app.use((err, req, res, next) => {
