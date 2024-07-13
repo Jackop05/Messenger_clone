@@ -6,9 +6,9 @@ const router = express.Router();
 
 
 
-router.post('/api/auth/login', login);
-router.post('/api/auth/register', register);
-router.post('/api/auth/logout', securePath, logout);
+router.post('/login', login);
+router.post('/register', register);
+router.post('/logout', securePath, logout);
 
 
 

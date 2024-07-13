@@ -6,8 +6,8 @@ const router = express.Router();
 
 
 
-router.get('/api/conversation/create-conversation/', securePath, createConversation);
-router.get('/api/conversation/post-conversation/', securePath, postConversation);
+router.get('/create-conversation/', securePath, createConversation);
+router.get('/post-conversation/', securePath, postConversation);
 
 
 

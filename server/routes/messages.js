@@ -6,8 +6,8 @@ const router = express.Router();
 
 
 
-router.get('/api/messages/add-new-friend/', securePath, newFriend);
-router.get('/api/messages/post-messages/', securePath, postMessages);
+router.get('/add-new-friend/', securePath, newFriend);
+router.get('/post-messages/', securePath, postMessages);
 
 
 

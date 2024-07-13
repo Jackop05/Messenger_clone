@@ -6,8 +6,8 @@ const router = express.Router();
 
 
 
-router.get('/api/images/post-image', securePath, postImage);
-router.get('/api/images/delete-image', securePath, deleteImage);
+router.get('/post-image', securePath, postImage);
+router.get('/delete-image', securePath, deleteImage);
 
 
 
