@@ -10,6 +10,9 @@ export default {
       colors: {
         'dark-transparent': 'rgba(0, 0, 0, 0.85)',
       },
+      height: {
+        'screen-conversation': 'calc(100vh - 72px - 76px)',
+      },
     },
   },
   plugins: [],
