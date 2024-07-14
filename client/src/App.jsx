@@ -7,6 +7,9 @@ import ProfileConversation from '../components/conversation/ProfileConversation'
 import Conversation from '../components/conversation/Conversation';
 import Taskboard from '../components/conversation/Taskboard';
 
+import ProfileSettings from '../components/settings/ProfileSettings';
+
+
 
 function App() {
   
@@ -19,9 +22,14 @@ function App() {
       <FooterMain />
       */}
 
+      {/*
       <ProfileConversation />
       <Conversation />
       <Taskboard />
+      */}
+        
+        <ProfileSettings />
+
     </>
   )
 }
