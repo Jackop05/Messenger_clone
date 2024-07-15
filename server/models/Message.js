@@ -9,24 +9,15 @@ const messageSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     text: {
         type: String
     },
     status: {
         type: String,
-        enum: ['successful', 'failed']
+        default: "Loading...",
     },
-    isImage: {
-        type: Boolean,
-        required: true
-    },
-    imageUrl: {
-        type: String,
-        default: null
-    }
 });
 
 

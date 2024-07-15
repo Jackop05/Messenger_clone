@@ -1,3 +1,4 @@
+/*
 const securePath = require('../middlewares/securePath');
 const { postImage, deleteImage } = require('../controllers/imagesController');
 
@@ -12,3 +13,4 @@ router.get('/delete-image', securePath, deleteImage);
 
 
 module.exports = router;
+*/

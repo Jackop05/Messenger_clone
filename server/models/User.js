@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
-        required: true
     },
     password: {
         type: String,
@@ -31,8 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     createdDate: {
         type: Date,
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     friendsIdList: [{
         type: String

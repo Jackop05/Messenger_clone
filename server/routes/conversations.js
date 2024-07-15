@@ -9,6 +9,9 @@ const router = express.Router();
 router.get('/create-conversation/', securePath, createConversation);
 router.get('/post-conversation/', securePath, postConversation);
 
+////////////////////////////////////////////////////////////////
+router.get('/update-conversation', securePath, updateConversation);
+
 
 
 module.exports = router;

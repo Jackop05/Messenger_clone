@@ -21,8 +21,7 @@ const groupSchema = new mongoose.Schema({
     messages: [messageSchema],
     groupImageUrl: {
         type: String,
-        default: 'public/images/defaultProfileImage',
-        required: true
+        default: 'public/images/defaultProfileImage'
     }
 });
 

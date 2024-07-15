@@ -10,8 +10,15 @@ const conversationSchema = new mongoose.Schema({
     },
     nickName: {
         type: String,
-        default: '',
-        trim: true
+        default: ''
+    },
+    themeColor: {
+        type: String,
+        default: 'black'
+    },
+    quickEmoji: {
+        type: String,
+        default: '😁'
     },
     messages: [messageSchema]
 });
