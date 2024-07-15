@@ -1,12 +1,12 @@
 const securePath = require('../middlewares/securePath');
-const { postMessages } = require('../controllers/messagesController');
+const { updateUser } = require('../controllers/userController');
 
 const express = require('express');
 const router = express.Router();
 
 
 
-router.get('/post-messages/', securePath, postMessages);
+router.post('/update-user', securePath, updateUser);
 
 
 
