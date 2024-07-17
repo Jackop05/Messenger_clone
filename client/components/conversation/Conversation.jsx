@@ -14,8 +14,8 @@ const Conversation = () => {
             <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>How've you been lately?</div>
             <div className='rounded-t-xl rounded-r-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-left self-start max-w-[250px]'>I did 10 pull ups and i feel great</div>
             <div className='rounded-t-xl rounded-r-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-left self-start max-w-[250px]'>Hello there!</div>
-            <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Hello there!</div>
-            <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Hello there!</div>
+            <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Wuld you like to train with me?</div>
+            <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Ok!</div>
             <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Hello there!</div>
             <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Hello there!</div>
             <div className='rounded-t-xl rounded-l-xl text-white text-[18px] bg-blue-600 py-2 px-4 text-right self-end max-w-[250px]'>Hello there!</div>
