@@ -1,13 +1,14 @@
 import React from 'react'
 import { FaBars, FaPen, FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
-
+ 
 const NavbarMain = () => {
   return (
     <div className='bg-black p-4 fixed w-full z-50'>
       <div className='flex justify-between w-full mb-4'>
-        <FaBars className="text-blue-600 w-6 h-6 cursor-pointer" />
+        <Link to="/user/settings/Jakub"><FaBars className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
         <div className='text-white font-bold text-xl'>Chats</div>
         <FaPen className="text-blue-600 w-6 h-6 cursor-pointer" />
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const UsersPreview = () => {
-  return (
+  return ( 
     <div className='flex flex-col gap-6 bg-black p-4 overflow-x-scroll overflow-y-hidden relative top-[114px]'>
         <div className='flex gap-4'>
             <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-12 w-12 min-h-12 h-12' />

@@ -18,7 +18,7 @@ const SuggestedUsers = () => {
         <div className=''>
             <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
             <div className='text-white text-center text-sm'>Dawid</div>
-        </div>  
+        </div>   
         <div className=''>
             <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
             <div className='text-white text-center text-sm'>Ewelina</div>

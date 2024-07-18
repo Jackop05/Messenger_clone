@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaUser, FaEnvelope } from 'react-icons/fa';
 
-const FooterMain = () => {
+const FooterMain = () => { 
   return (
     <div className='bg-dark-transparent backdrop-blur-sm z-50 fixed bottom-0 flex justify-around w-full p-2'>
         <div className='flex flex-col'>
