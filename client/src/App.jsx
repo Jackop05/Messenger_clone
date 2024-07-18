@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import NavbarMain from '../components/main/NavbarMain';
@@ -15,13 +15,13 @@ import ProfileSettings from '../components/settings/ProfileSettings';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 
-const Main = () => {
+const Main = (props) => {
   return (
     <>
-      <NavbarMain />
-      <SuggestedUsers />
-      <UsersPreview />
-      <FooterMain />
+      <NavbarMain searchUser={props.searchUser} setSearchUser={props.setSearchUser} handleInputChange={props.handleInputChange} />
+      <SuggestedUsers searchUser={props.searchUser} />
+      <UsersPreview searchUser={props.searchUser} />
+      <FooterMain handleChatsClick={props.handleChatsClick} handleNewUsersClick={props.handleNewUsersClick} />
     </>
   );
 }
@@ -45,10 +45,35 @@ const ConversationSettings = () => {
 }
 
 const App = () => {
+  const [searchUser, setSearchUser] = useState('');
+
+  const handleInputChange = (e) => {
+    e.preventDefault;
+    setSearchUser(e.target.value);
+  }
+
+  const handleChatsClick = () => {
+    setSearchUser('');
+  }
+
+  const handleNewUsersClick = () => {
+    if(searchUser === '') {
+      setSearchUser('Jakub');
+    }
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/main" element={<Main />} />
+        <Route path="/" element={
+          <Main 
+            searchUser={searchUser} 
+            setSearchUser={setSearchUser} 
+            handleInputChange={handleInputChange} 
+            handleChatsClick={handleChatsClick} 
+            handleNewUsersClick={handleNewUsersClick} 
+          />} 
+        />
         <Route path="/user/settings/:id" element={<ConversationSettings />} />
         <Route path="/conversation/:id" element={<ConversationPage />} />
         <Route path="/conversation/settings/:id" element={<ConversationSettings />} />
