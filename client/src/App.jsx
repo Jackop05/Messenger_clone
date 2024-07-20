@@ -11,6 +11,7 @@ import Conversation from '../components/conversation/Conversation';
 import Taskboard from '../components/conversation/Taskboard';
 
 import ProfileSettings from '../components/settings/ProfileSettings';
+import UserSettings from '../components/settings/UserSettings';
 
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
@@ -74,9 +75,9 @@ const App = () => {
             handleNewUsersClick={handleNewUsersClick} 
           />} 
         />
-        <Route path="/user/settings/:id" element={<ConversationSettings />} />
-        <Route path="/conversation/:id" element={<ConversationPage />} />
         <Route path="/conversation/settings/:id" element={<ConversationSettings />} />
+        <Route path="/conversation/:id" element={<ConversationPage />} />
+        <Route path="/user/settings/:id" element={<UserSettings />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

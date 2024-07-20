@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebook, FaBell, FaArrowRight } from 'react-icons/fa';
+import { FaFacebook, FaBell, FaArrowLeft } from 'react-icons/fa';
 import { Link, useLocation  } from 'react-router-dom';
 
 import SettingsConversation from './SettingsConversation';
@@ -13,8 +13,8 @@ const ProfileSettings = () => {
 
   return (
     <div className='bg-gray-900'>
-        <div className='w-full flex justify-end absolute'>
-            <Link to={link}><FaArrowRight className="  text-white m-8 w-6 h-6" /></Link>
+        <div className='w-full flex justify-start absolute'>
+            <Link to={link}><FaArrowLeft className="  text-white m-8 w-6 h-6" /></Link>
         </div>
       <div className='bg-black h-screen overflow-y-scroll items-center text-center flex flex-col justify-start gap-3 text-white p-8 pt-32'>
           <img className='rounded-full w-20 h-20 mb-1' src="images/defaultUser.png" slt="Profile image" />
