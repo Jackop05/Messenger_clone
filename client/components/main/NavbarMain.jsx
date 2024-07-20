@@ -13,7 +13,7 @@ const NavbarMain = (props) => {
       <div className='flex justify-between w-full mb-4'>
         <Link to="/user/settings/Jakub"><FaBars className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
         <div className='text-white font-bold text-xl'>Chats</div>
-        <FaPen className="text-blue-600 w-6 h-6 cursor-pointer" />
+        <Link to='/create-group/jakub'><FaPen className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
       </div>
       <div className='w-full bg-gray-700 rounded-xl flex between p-2 '>
         <FaSearch className="text-gray-400 w-6 h-6 mr-2" />

@@ -1,5 +1,7 @@
 const securePath = require('../middlewares/securePath');
-const { login, register, logout } = require('../controllers/authUserController');
+const login = require('../controllers/authUserController/login');
+const register = require('../controllers/authUserController/register');
+const logout = require('../controllers/authUserController/logout');
 
 const express = require('express');
 const router = express.Router();

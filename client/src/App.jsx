@@ -16,6 +16,10 @@ import UserSettings from '../components/settings/UserSettings';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 
+import CreateGroup from '../components/createChat/CreateGroup';
+
+
+
 const Main = (props) => {
   return (
     <>
@@ -78,6 +82,7 @@ const App = () => {
         <Route path="/conversation/settings/:id" element={<ConversationSettings />} />
         <Route path="/conversation/:id" element={<ConversationPage />} />
         <Route path="/user/settings/:id" element={<UserSettings />} />
+        <Route path="/create-group/:id" element={<CreateGroup />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

@@ -1,5 +1,8 @@
 const securePath = require('../middlewares/securePath');
-const { getUserData, getConversationData, getGroupData, getSuggestedUsers } = require('../controllers/getDataController');
+const getUserData = require('../controllers/getDataController/getUserData');
+const getConversationData = require('../controllers/getDataController/getConversationData');
+const getGroupData = require('../controllers/getDataController/getGroupData');
+const getSuggestedUsers = require('../controllers/getDataController/getSuggestedUsers');
 
 const express = require('express');
 const router = express.Router();
