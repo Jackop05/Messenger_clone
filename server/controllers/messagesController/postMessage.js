@@ -27,30 +27,34 @@ async function postMessage(req, res) {
 
         // Check if a conversation already exists between the two users
         let conversation = await Conversation.findOne({
-            userId: { $all: [currentUser._id, otherUser._id] }
+            users: { $all: [currentUser.username, otherUser.username] }
         });
 
         if (!conversation) {
             // Create a new conversation if it doesn't exist
             conversation = new Conversation({
-                userId: [currentUser._id, otherUser._id],
+                users: [currentUser.username, otherUser.username],
                 messages: []
             });
-
+            
+            
             // Save the new conversation
-            const newConversation = await conversation.save();
+            await conversation.save();
+            
 
             // Add the conversation ID to both users' conversations arrays
-            currentUser.conversations.push(newConversation._id);
-            otherUser.conversations.push(newConversation._id);
+            currentUser.conversations.push(otherUser.username);
+            otherUser.conversations.push(otherUser.username);
+            
 
             await currentUser.save();
             await otherUser.save();
+            console.log('working')
         }
 
         // Create a new message
         const newMessage = {
-            userId: currentUser._id,
+            user: currentUser.username,
             text,
             date: new Date(),
             status: 'Sent',

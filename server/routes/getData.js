@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/get-user-data', securePath, getUserData);
 router.get('/get-new-friends/:description', getNewFriends);
-router.get('/get-conversation-data/:conversationId', securePath, getConversationData);
+router.get('/get-conversation-data', securePath, getConversationData);
 router.get('/getGroupData', securePath, getGroupData);
 router.get('/suggested-users', securePath, getSuggestedUsers);
 

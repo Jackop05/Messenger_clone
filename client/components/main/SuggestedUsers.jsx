@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const SuggestedUsers = (props) => {
   const display = props.searchUser ? false : true;
@@ -47,10 +48,10 @@ const SuggestedUsers = (props) => {
 
     suggestedArray = suggestedArray.map((name) => {
         return (
-            <div className=''>
+            <Link to={`/conversation/${name}`}>
                 <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
                 <div className='text-white text-center text-sm'>{name}</div>
-            </div> 
+            </Link> 
         )
     })
 

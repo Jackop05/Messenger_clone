@@ -4,10 +4,10 @@ const messageSchema = require('./Message');
 
 
 const conversationSchema = new mongoose.Schema({
-    userId: {
+    users: [{
         type: String,
         required: true
-    },
+    }],
     nickName: {
         type: String,
         default: ''

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 
 const messageSchema = new mongoose.Schema({
-    userId: {
+    user: {
         type: String,
         required: true
     },

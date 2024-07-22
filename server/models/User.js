@@ -28,12 +28,10 @@ const userSchema = new mongoose.Schema({
         type: String
     }],
     conversations: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Conversation'
+        type: String
     }],
     groups: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Group'
+        type: String
     }]
 });
 
