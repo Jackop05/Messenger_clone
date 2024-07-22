@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 
-router.get('/post-messages/', securePath, postMessages);
+router.post('/post-messages/:otherUsername', securePath, postMessages);
 
 
 

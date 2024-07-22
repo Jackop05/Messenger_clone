@@ -1,12 +1,22 @@
 const express = require('express');
-const router = express.Router();
+const jwt = require('jsonwebtoken');
 const User = require('../../models/User'); // Adjust the path as necessary
+require('dotenv').config(); // Ensure environment variables are loaded
+
 
 
 const getUserData = async (req, res) => {
-    const { userId } = req.body;
+    const token = req.cookies.jwt;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Not authenticated' });
+    }
 
     try {
+        // Verify the token and extract userId
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.userId;
+
         // Find user by userId
         const userData = await User.findById(userId);
         if (!userData) {
@@ -15,8 +25,9 @@ const getUserData = async (req, res) => {
 
         res.status(200).json({ userData });
     } catch (error) {
+        console.error('Error fetching user data:', error);
         res.status(500).json({ message: 'Error fetching user data: ' + error.message });
     }
 };
 
-module.exports = router;
+module.exports = getUserData;

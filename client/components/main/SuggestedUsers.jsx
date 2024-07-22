@@ -1,44 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const SuggestedUsers = (props) => {
   const display = props.searchUser ? false : true;
+
+  const [userData, setUserData] = useState('');
+
+    const getUserData = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/data/get-user-data', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            });
+
+
+            if (!response.ok) {
+                navigate('/login');
+                throw new Error(`Error occured while requesting for user data`);
+            }
+
+            const data = await response.json();
+            setUserData(data.userData);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            return null;
+        }
+    }
+
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+    const usedIndices = new Set();
+    let suggestedArray = [];
+    while (suggestedArray.length < 10 && suggestedArray.length < userData?.friendsIdList?.length) {
+        const randomIndex = Math.floor(Math.random() * userData?.friendsIdList?.length);
+        
+        // Ensure we do not pick the same index more than once
+        if (!usedIndices.has(randomIndex)) {
+          suggestedArray.push(userData?.friendsIdList[randomIndex]);
+          usedIndices.add(randomIndex);
+        }
+    }
+
+    suggestedArray = suggestedArray.map((name) => {
+        return (
+            <div className=''>
+                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
+                <div className='text-white text-center text-sm'>{name}</div>
+            </div> 
+        )
+    })
+
+
+
 
   return (
     <div>
         {display &&
         <div className='flex bg-black p-4 gap-4 overflow-scroll relative top-[115px]'>
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Ania</div>
-            </div>  
-            <div className='w-16'>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Bartek</div>
-            </div>  
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Celina</div>
-            </div>  
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Dawid</div>
-            </div>   
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Ewelina</div>
-            </div>  
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Filip</div>
-            </div>    
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Gabrysia</div>
-            </div>  
-            <div className=''>
-                <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-16 w-16 min-h-16 h-16 mb-1' />
-                <div className='text-white text-center text-sm'>Hubert</div>
-            </div>   
+            {suggestedArray}
         </div>
         }
     </div>

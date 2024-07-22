@@ -1,46 +1,72 @@
-const express = require('express');
-const router = express.Router();
-const Message = require('../../models/Message'); // Adjust the path as necessary
-const Conversation = require('../../models/Conversation'); // Adjust the path as necessary
-const User = require('../../models/User'); // Adjust the path as necessary
+const mongoose = require('mongoose');
+const Conversation = require('../../models/Conversation'); // Adjust the path if necessary
+const User = require('../../models/User'); // Adjust the path if necessary
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-router.post('/postMessage', async (req, res) => {
-    const { userId, conversationId, text } = req.body;
+async function postMessage(req, res) {
+    const { otherUsername } = req.params; // The username of the other participant
+    const { text } = req.body;
+    const token = req.cookies.jwt;
 
     try {
-        // Create a new message
-        const newMessage = new Message({
-            userId,
-            text
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const username = decoded.username;
+
+        // Find both users by their usernames
+        const currentUser = await User.findOne({ username });
+        const otherUser = await User.findOne({ username: otherUsername });
+
+        if (!currentUser || !otherUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Check if a conversation already exists between the two users
+        let conversation = await Conversation.findOne({
+            userId: { $all: [currentUser._id, otherUser._id] }
         });
-        const savedMessage = await newMessage.save();
 
-        // Update conversation to include the new message
-        const updatedConversation = await Conversation.findByIdAndUpdate(
-            conversationId,
-            { $push: { messages: savedMessage._id } },
-            { new: true }
-        );
+        if (!conversation) {
+            // Create a new conversation if it doesn't exist
+            conversation = new Conversation({
+                userId: [currentUser._id, otherUser._id],
+                messages: []
+            });
 
-        if (!updatedConversation) {
-            return res.status(404).json({ message: 'Conversation not found' });
+            // Save the new conversation
+            const newConversation = await conversation.save();
+
+            // Add the conversation ID to both users' conversations arrays
+            currentUser.conversations.push(newConversation._id);
+            otherUser.conversations.push(newConversation._id);
+
+            await currentUser.save();
+            await otherUser.save();
         }
 
-        // Update user's conversations
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { $addToSet: { conversations: conversationId } },
-            { new: true }
-        );
+        // Create a new message
+        const newMessage = {
+            userId: currentUser._id,
+            text,
+            date: new Date(),
+            status: 'Sent',
+        };
 
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+        // Add the new message to the conversation's messages array
+        conversation.messages.push(newMessage);
 
-        res.status(201).json({ message: 'Message posted successfully', message: savedMessage });
+        // Save the conversation with the new message
+        await conversation.save();
+
+        res.status(200).json({ message: 'Message sent successfully', newMessage });
     } catch (error) {
-        res.status(500).json({ message: 'Error posting message: ' + error.message });
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
-});
+}
 
-module.exports = router;
+module.exports = postMessage;

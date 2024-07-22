@@ -21,6 +21,7 @@ import CreateGroup from '../components/createChat/CreateGroup';
 
 
 const Main = (props) => {
+
   return (
     <>
       <NavbarMain searchUser={props.searchUser} setSearchUser={props.setSearchUser} handleInputChange={props.handleInputChange} />
@@ -80,7 +81,7 @@ const App = () => {
           />} 
         />
         <Route path="/conversation/settings/:id" element={<ConversationSettings />} />
-        <Route path="/conversation/:id" element={<ConversationPage />} />
+        <Route path="/conversation/:otherUsername" element={<ConversationPage />} />
         <Route path="/user/settings/:id" element={<UserSettings />} />
         <Route path="/create-group/:id" element={<CreateGroup />} />
         <Route path="login" element={<Login />} />

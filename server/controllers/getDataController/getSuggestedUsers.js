@@ -55,4 +55,4 @@ const getSuggestedUsers = async (req, res) => {
     }
 };
 
-module.exports = router;
+module.exports = getSuggestedUsers;

@@ -1,24 +1,44 @@
-const express = require('express');
-const router = express.Router();
-const Conversation = require('../../models/Conversation'); // Adjust the path as necessary
+const mongoose = require('mongoose');
+const Conversation = require('../../models/Conversation'); // Adjust the path if necessary
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-
-
-// Route to get conversation data
-const getConversationData = async (req, res) => {
-    const { conversationId } = req.body;
+async function getConversationData(req, res) {
+    const { conversationId } = req.params;
+    const token = req.cookies.jwt;
 
     try {
-        // Find conversation by conversationId
-        const conversationData = await Conversation.findById(conversationId);
-        if (!conversationData) {
-            return res.status(404).json({ message: 'Conversation not found' });
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        res.status(200).json({ conversationData });
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching conversation data: ' + error.message });
-    }
-};
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-module.exports = router;
+        // Find the conversation by ID and check if the user is part of it
+        const conversation = await Conversation.findById(conversationId)
+            .select('messages') // Only select the messages field
+            .exec();
+
+        if (!conversation) {
+            return res.status(404).json({ error: 'Conversation not found' });
+        }
+
+        // Assuming you have a userId field in the conversation schema to check against
+        if (!conversation.userId.includes(decoded.userId)) {
+            return res.status(403).json({ error: 'Users not in conversation cannot interact with it' });
+        }
+
+        // Sort messages by date in descending order and take the last 200 messages
+        const messages = conversation.messages.sort((a, b) => b.date - a.date).slice(0, 200);
+
+        // Format the messages as required
+        const formattedMessages = messages.map(msg => [msg.text, msg.userId]);
+
+        res.status(200).json(formattedMessages);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = getConversationData;

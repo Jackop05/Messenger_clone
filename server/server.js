@@ -13,7 +13,10 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json()); // Built-in middleware for parsing JSON
 app.use(cookieParser()); // Middleware for parsing cookies
-app.use(cors()); // Middleware for handling CORS
+app.use(cors({
+    origin: 'http://localhost:5173', // replace with your client's URL
+    credentials: true
+}));
 
 // Connect to MongoDB
 connectDB().then(() => {
@@ -24,7 +27,6 @@ connectDB().then(() => {
     console.error('Failed to connect to MongoDB', err);
 });
 
-// Routes
 
 const authUserRoutes = require('./routes/authUser');
 const conversationRoutes = require('./routes/conversations');

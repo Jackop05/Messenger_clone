@@ -14,10 +14,6 @@ const messageSchema = new mongoose.Schema({
     text: {
         type: String
     },
-    status: {
-        type: String,
-        default: "Loading...",
-    },
 });
 
 
