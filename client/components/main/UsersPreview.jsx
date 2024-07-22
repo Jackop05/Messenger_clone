@@ -108,7 +108,12 @@ const UsersPreview = (props) => {
 
 
 
-    let conversationArray = userData?.conversations?.map((username) => {
+    let conversationArray = conversationsData?.map((conversation) => {
+        const length = conversation.messages.length;
+        const username = conversation.users.filter(username => username !== userData.username);
+        const preMessage = conversation.messages[length-1].text;
+        const preMessageUser = conversation.messages[length-1].user;
+        const preMessageTime = conversation.messages[length-1].date.slice(11, 16);
 
         return (
             <Link to={`/conversation/${username}`}>
@@ -116,11 +121,10 @@ const UsersPreview = (props) => {
                         <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-12 w-12 min-h-12 h-12' />
                         <div className='flex flex-col justify-center'>
                             <div className='text-md font-bold text-white'>{username}</div>
-                                <div className='flex justify-left gap-2 text-sm font-bold text-gray-500'>
-                                    <div>You: </div>
-                                    <div>Hi, how are you?</div>
-                                    <div><span className='font-normal mr-1'>•</span>18:55</div>
-                                </div>
+                            <div className='flex justify-left gap-2 text-sm font-bold text-gray-500'>
+                                <div className='mr-[4px]'>{preMessageUser}: </div>
+                                <div>{preMessage} <span className='font-normal mr-1'>•</span>{preMessageTime}</div>
+                            </div>
                         </div>
                     </div>
                 </Link>
