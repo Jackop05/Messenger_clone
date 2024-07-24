@@ -8,10 +8,10 @@ const conversationSchema = new mongoose.Schema({
         type: String,
         required: true
     }],
-    nickName: {
+    nickName: [{
         type: String,
-        default: ''
-    },
+        default: ['', '']
+    }],
     themeColor: {
         type: String,
         default: 'black'
@@ -20,7 +20,15 @@ const conversationSchema = new mongoose.Schema({
         type: String,
         default: '😁'
     },
-    messages: [messageSchema]
+    messages: [messageSchema],
+    groupImage: {
+        type: String,
+        default: 'images/defaultProfileImage'
+    },
+    groupName: {
+        type: String,
+        default: 'None'
+    }
 });
 
 

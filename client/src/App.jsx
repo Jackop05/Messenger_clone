@@ -6,9 +6,7 @@ import SuggestedUsers from '../components/main/SuggestedUsers';
 import UsersPreview from '../components/main/UsersPreview';
 import FooterMain from '../components/main/FooterMain';
 
-import ProfileConversation from '../components/conversation/ProfileConversation';
 import Conversation from '../components/conversation/Conversation';
-import Taskboard from '../components/conversation/Taskboard';
 
 import ProfileSettings from '../components/settings/ProfileSettings';
 import UserSettings from '../components/settings/UserSettings';
@@ -27,17 +25,15 @@ const Main = (props) => {
       <NavbarMain searchUser={props.searchUser} setSearchUser={props.setSearchUser} handleInputChange={props.handleInputChange} />
       <SuggestedUsers searchUser={props.searchUser} />
       <UsersPreview searchUser={props.searchUser} />
-      <FooterMain handleChatsClick={props.handleChatsClick} handleNewUsersClick={props.handleNewUsersClick} />
+      <FooterMain handleChatsClick={props.handleChatsClick} />
     </>
   );
 }
 
-const ConversationPage = () => {
+const ConversationPage = (props) => {
   return (
     <>
       <Conversation />
-      <ProfileConversation /> 
-      <Taskboard />
     </>
   )
 }
@@ -62,12 +58,6 @@ const App = () => {
     setSearchUser('');
   }
 
-  const handleNewUsersClick = () => {
-    if(searchUser === '') {
-      setSearchUser('Jakub');
-    }
-  }
-
   return (
     <Router>
       <Routes>
@@ -77,13 +67,13 @@ const App = () => {
             setSearchUser={setSearchUser} 
             handleInputChange={handleInputChange} 
             handleChatsClick={handleChatsClick} 
-            handleNewUsersClick={handleNewUsersClick} 
           />} 
         />
-        <Route path="/conversation/settings/:id" element={<ConversationSettings />} />
+        <Route path="/conversation/settings/:otherUsername" element={<ConversationSettings />} />
         <Route path="/conversation/:otherUsername" element={<ConversationPage />} />
-        <Route path="/user/settings/:id" element={<UserSettings />} />
-        <Route path="/create-group/:id" element={<CreateGroup />} />
+        <Route path="/user/settings/:username" element={<UserSettings />} />
+        <Route path="/group/:id" element={...} />
+        <Route path="/create-group" element={<CreateGroup />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

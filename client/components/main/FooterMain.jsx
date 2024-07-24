@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaUser, FaEnvelope } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const FooterMain = (props) => {
 
@@ -11,7 +12,7 @@ const FooterMain = (props) => {
         </div>
         <div className='flex flex-col'>
             <FaUser className='text-white w-8 h-8 self-center' />
-            <div className='text-sm text-center text-white' onClick={props.handleNewUsersClick} >New Users</div>
+            <Link to="/"><div className='text-sm text-center text-white' >New Users</div></Link>
         </div>
     </div>
   )

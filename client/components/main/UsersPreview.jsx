@@ -114,13 +114,15 @@ const UsersPreview = (props) => {
         const preMessage = conversation.messages[length-1].text;
         const preMessageUser = conversation.messages[length-1].user;
         const preMessageTime = conversation.messages[length-1].date.slice(11, 16);
+        let nickname = (conversation.users[0] === username) ? conversation.nickName[0] : conversation.nickName[1];
+        nickname = nickname ? nickname : username;
 
         return (
             <Link to={`/conversation/${username}`}>
                     <div className='flex gap-4'>
                         <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-12 w-12 min-h-12 h-12' />
                         <div className='flex flex-col justify-center'>
-                            <div className='text-md font-bold text-white'>{username}</div>
+                            <div className='text-md font-bold text-white'>{nickname}</div>
                             <div className='flex justify-left gap-2 text-sm font-bold text-gray-500'>
                                 <div className='mr-[4px]'>{preMessageUser}: </div>
                                 <div>{preMessage} <span className='font-normal mr-1'>•</span>{preMessageTime}</div>

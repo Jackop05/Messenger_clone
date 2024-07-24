@@ -49,7 +49,6 @@ async function postMessage(req, res) {
 
             await currentUser.save();
             await otherUser.save();
-            console.log('working')
         }
 
         // Create a new message

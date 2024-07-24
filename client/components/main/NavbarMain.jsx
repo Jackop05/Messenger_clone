@@ -6,14 +6,13 @@ import { Link } from 'react-router-dom';
  
 const NavbarMain = (props) => {
   
-
-
+  
   return (
     <div className='bg-black p-4 fixed w-full z-50'>
       <div className='flex justify-between w-full mb-4'>
         <Link to="/user/settings/Jakub"><FaBars className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
         <div className='text-white font-bold text-xl'>Chats</div>
-        <Link to='/create-group/jakub'><FaPen className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
+        <Link to='/create-group'><FaPen className="text-blue-600 w-6 h-6 cursor-pointer" /></Link>
       </div>
       <div className='w-full bg-gray-700 rounded-xl flex between p-2 '>
         <FaSearch className="text-gray-400 w-6 h-6 mr-2" />
