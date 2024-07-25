@@ -21,16 +21,18 @@ const getConversationsData = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const me = decoded.username;
 
-
         // Fetch conversations where both `me` and a specific username are included
         const conversationsArray = [];
+
+        // Fetch conversations where groupName is not empty and 'me' is included
+        const groupConversations = await Conversation.find({
+            groupName: { $ne: '' },
+            users: me
+        });
+
         
-        for (const username of usernames) {
-            const conversation = await Conversation.find({
-                users: { $all: [username, me] } // Ensure `me` and the specified username are included
-            })
-            conversationsArray.push(...conversation); // Add the fetched conversations to the array
-        }
+
+        conversationsArray.push(...groupConversations); // Add these conversations to the array
 
         res.status(200).json(conversationsArray);
     } catch (error) {
