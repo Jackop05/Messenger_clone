@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UsersPreview = (props) => {
     const navigate = useNavigate();
-    const location = useLocation();
     const searchUser = props.searchUser;
 
     const [userData, setUserData] = useState('');
@@ -64,10 +63,10 @@ const UsersPreview = (props) => {
     const getConversationsData = async () => {
         try {
             const queryParams = new URLSearchParams({
-                username: userData.conversations
+                username: userData.conversations,
+                type: 'all'
             }).toString();
 
-            console.log('queryParams: ', queryParams);
 
             const response = await fetch(`http://localhost:5000/api/data/get-conversation-data?${queryParams}`, {
                 method: 'GET',
@@ -79,7 +78,6 @@ const UsersPreview = (props) => {
 
             const data = await response.json();
             if (response.ok) {
-                console.log('Data: ', data);
                 setConversationsData(data);
             } else {
                 console.error('Failed to fetch conversations:', data);
@@ -116,7 +114,11 @@ const UsersPreview = (props) => {
         const preMessageTime = conversation.messages[length-1]?.date.slice(11, 16);
         let preView = (conversation.users[0] === username) ? conversation.nickName[0] : conversation.nickName[1];
         preView = preView ? preView : username;
+
+        let link = `/conversation/${username}`;
         if(conversation.groupName != 'None') {
+            console.log('Group!!!')
+            link = `/group/${conversation._id}`;
             preView = conversation.groupName;
         }
 
@@ -128,8 +130,10 @@ const UsersPreview = (props) => {
 
         
 
+        
+
         return (
-            <Link to={`/conversation/${username}`}>
+            <Link to={link}>
                     <div className='flex gap-4'>
                         <img src="images/defaultUser.png" alt="Profile image" className='rounded-full min-w-12 w-12 min-h-12 h-12' />
                         <div className='flex flex-col justify-center'>

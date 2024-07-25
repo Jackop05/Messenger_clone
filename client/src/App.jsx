@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/conversation/settings/:otherUsername" element={<ConversationSettings />} />
         <Route path="/conversation/:otherUsername" element={<ConversationPage />} />
         <Route path="/user/settings/:username" element={<UserSettings />} />
-        <Route path="/group" />
+        <Route path="/group/:groupId" element={<ConversationPage />} />
         <Route path="/create-group" element={<CreateGroup />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

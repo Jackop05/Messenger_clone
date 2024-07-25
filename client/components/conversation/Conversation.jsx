@@ -6,36 +6,64 @@ import { Link } from 'react-router-dom';
 
 
 
-const Conversation = ( props ) => {
+const Conversation = () => {
     const bottomRef = useRef(null);
-    const { otherUsername } = useParams();
+    const { otherUsername, groupId } = useParams();
     const [conversationData, setConversationsData] = useState();
     const [message, setMessage] = useState('');
+    console.log('otherUsername: ', otherUsername);
      
 
 
     const getConversationsData = async () => {
-      try {
-          const queryParams = new URLSearchParams({
-              username: otherUsername
-          }).toString();
+      if(otherUsername != undefined){
+          try {
+            const queryParams = new URLSearchParams({
+                username: otherUsername,
+                type: 'conversation'
+            }).toString();
 
-          const response = await fetch(`http://localhost:5000/api/data/get-conversation-data?${queryParams}`, {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              credentials: 'include',
-          });
+            const response = await fetch(`http://localhost:5000/api/data/get-conversation-data?${queryParams}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
 
-          const data = await response.json();
-          if (response.ok) {
-              setConversationsData(data[0]);
-          } else {
-              console.error('Failed to fetch conversations:', data);
-          }
-      } catch (error) {
-          console.error('Error fetching conversations:', error);
+            const data = await response.json();
+            if (response.ok) {
+                setConversationsData(data[0]);
+            } else {
+                console.error('Failed to fetch conversations:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching conversations:', error);
+        }
+      } else {
+          try {
+            const queryParams = new URLSearchParams({
+                groupId: groupId,
+                type: 'group'
+            }).toString();
+
+            const response = await fetch(`http://localhost:5000/api/data/get-conversation-data?${queryParams}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setConversationsData(data[0]);
+            } else {
+                console.error('Failed to fetch conversations:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching conversations:', error);
+        }
       }
   }
 
@@ -107,7 +135,7 @@ const Conversation = ( props ) => {
   }, []);
 
 
-
+  console.log('Conversations: ', conversationData)
 
   let messagesArray = conversationData?.messages?.map((message) => {
     const style = (otherUsername === message.user) ? "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500" : "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600";
@@ -127,9 +155,11 @@ const Conversation = ( props ) => {
   useEffect(() => {
     nickname = (conversationData?.users[0] === otherUsername) ? conversationData?.nickName[0] : conversationData?.nickName[1];
     nickname = nickname ? nickname : otherUsername;
+    
+
   }, [conversationData])
 
-
+  
 
   return (
     <div>
@@ -137,7 +167,7 @@ const Conversation = ( props ) => {
           <div className="flex justify-center gap-2 items-center">
             <Link to="/"><FaAngleLeft className='text-white w-8 h-8  ' /></Link>
             <img src="images/defaultUser.png" alt="Profile image" className='rounded-full text-white w-10 h-10' />
-            <div className='text-white text-lg'>{nickname}</div>
+            <div className='text-white text-lg'>{(conversationData?.groupName == 'None') ? nickname : conversationData?.groupName}</div>
           </div>
           <Link to={`/conversation/settings/${otherUsername}`}><FaBars className="text-white w-6 h-6" /></Link>
 

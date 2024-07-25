@@ -5,14 +5,10 @@ const Conversation = require('../../models/Conversation'); // Adjust the path if
 const router = express.Router();
 
 const getConversationsData = async (req, res) => {
-    const { username } = req.query; // Comma-separated list of usernames
+    const { username, type, groupId } = req.query; // Comma-separated list of usernames
     const usernames = username ? username.split(',') : []; // Split to get an array of usernames
 
     try {
-        if (!usernames.length) {
-            return res.status(400).json({ error: 'No usernames provided' });
-        }
-
         const token = req.cookies.jwt;
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized' });
@@ -24,15 +20,31 @@ const getConversationsData = async (req, res) => {
         // Fetch conversations where both `me` and a specific username are included
         const conversationsArray = [];
 
+
+
         // Fetch conversations where groupName is not empty and 'me' is included
-        const groupConversations = await Conversation.find({
-            groupName: { $ne: '' },
-            users: me
-        });
+        if(type === 'conversation'){
+            for (const username of usernames) {
+                const conversations = await Conversation.find({
+                    users: { $all: [username, me] } // Ensure `me` and the specified username are included
+                });
+                conversationsArray.push(...conversations); // Add the fetched conversations to the array
+            }
+        } else if (type === 'all'){
+            const groupConversations = await Conversation.find({
+                groupName: { $ne: '' },
+                users: me
+            });
+            conversationsArray.push(...groupConversations)
+        } else if (type === 'group'){
+            const groupConversations = await Conversation.find({
+                _id: { $all: groupId },
+                users: me
+            });
+            conversationsArray.push(...groupConversations)
+        }
 
         
-
-        conversationsArray.push(...groupConversations); // Add these conversations to the array
 
         res.status(200).json(conversationsArray);
     } catch (error) {
