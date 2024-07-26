@@ -11,7 +11,6 @@ const Conversation = () => {
     const { otherUsername, groupId } = useParams();
     const [conversationData, setConversationsData] = useState();
     const [message, setMessage] = useState('');
-    console.log('otherUsername: ', otherUsername);
      
 
 
@@ -68,8 +67,10 @@ const Conversation = () => {
   }
 
   const onSendClick = async () => {
+    const link = (conversationData.groupName != 'None') ? `http://localhost:5000/api/messages/post-group-messages/${conversationData._id}` : `http://localhost:5000/api/messages/post-messages/${otherUsername}`;
+
     try {
-        const response = await fetch(`http://localhost:5000/api/messages/post-messages/${otherUsername}`, {
+        const response = await fetch(link, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ const Conversation = () => {
   }, []);
 
 
-  console.log('Conversations: ', conversationData)
+
 
   let messagesArray = conversationData?.messages?.map((message) => {
     const style = (otherUsername === message.user) ? "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500" : "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600";

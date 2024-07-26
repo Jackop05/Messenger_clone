@@ -5,9 +5,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 async function postMessage(req, res) {
-    const { otherUsername } = req.params; // The username of the other participant
+    const { otherUsername, groupId } = req.params; // The username of the other participant
     const { text } = req.body;
     const token = req.cookies.jwt;
+    console.log('Important: ', text, otherUsername, groupId)
 
     try {
         if (!token) {
@@ -21,14 +22,23 @@ async function postMessage(req, res) {
         const currentUser = await User.findOne({ username });
         const otherUser = await User.findOne({ username: otherUsername });
 
-        if (!currentUser || !otherUser) {
+        if ((!currentUser || !otherUser) && otherUsername) {
             return res.status(404).json({ error: 'User not found' });
         }
 
         // Check if a conversation already exists between the two users
-        let conversation = await Conversation.findOne({
-            users: { $all: [currentUser.username, otherUser.username] }
-        });
+        let conversation;
+        if(otherUsername){
+            conversation = await Conversation.findOne({
+                users: { $all: [currentUser.username, otherUser.username] }
+            });
+        } else if(groupId){
+            conversation = await Conversation.find({
+                _id: { $all: groupId },
+                users: currentUser.username
+            });
+            conversation = conversation[0];
+        }
 
         if (!conversation) {
             // Create a new conversation if it doesn't exist
@@ -43,12 +53,17 @@ async function postMessage(req, res) {
             
 
             // Add the conversation ID to both users' conversations arrays
-            currentUser.conversations.push(otherUser.username);
-            otherUser.conversations.push(otherUser.username);
+            currentUser.conversations.push(username.username);
+            if(otherUsername){
+                otherUser.conversations.push(otherUser.username);
+            }
             
 
             await currentUser.save();
-            await otherUser.save();
+            if(otherUsername){
+                await otherUser.save();
+            }
+            
         }
 
         // Create a new message
@@ -59,8 +74,13 @@ async function postMessage(req, res) {
             status: 'Sent',
         };
 
+        console.log(newMessage);
+
         // Add the new message to the conversation's messages array
         conversation.messages.push(newMessage);
+        
+        
+        
 
         // Save the conversation with the new message
         await conversation.save();
