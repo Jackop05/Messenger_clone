@@ -7,10 +7,9 @@ import SettingsConversation from './SettingsConversation';
 
 
 const ProfileSettings = () => {
-  const { otherUsername } = useParams();
+  const { otherUsername, groupId } = useParams();
   const location = useLocation();
-  const currentPath = location.pathname;
-  const link = currentPath.replace('/settings', '');
+  const link = otherUsername ? `/conversation/${otherUsername}` : `/group/${groupId}`;
 
   return (
     <div className='bg-gray-900'>

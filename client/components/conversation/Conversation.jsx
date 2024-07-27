@@ -11,7 +11,34 @@ const Conversation = () => {
     const { otherUsername, groupId } = useParams();
     const [conversationData, setConversationsData] = useState();
     const [message, setMessage] = useState('');
-     
+    const [ userData, setUserData ] = useState('');
+
+
+
+
+    const getUserData = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/data/get-user-data', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            });
+
+
+            if (!response.ok) {
+                navigate('/login');
+                throw new Error(`Error occured while requesting for user data`);
+            }
+
+            const data = await response.json();
+            setUserData(data.userData);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            return null;
+        }
+    }     
 
 
     const getConversationsData = async () => {
@@ -133,13 +160,14 @@ const Conversation = () => {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    getUserData();
   }, []);
 
 
 
 
   let messagesArray = conversationData?.messages?.map((message) => {
-    const style = (otherUsername === message.user) ? "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500" : "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600";
+    const style = (userData.username != message.user) ? "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500" : "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600";
 
     return (
       <div className={`text-white text-[18px] py-2 px-4 max-w-[250px] ${style}`}>{message.text}</div>
@@ -170,7 +198,7 @@ const Conversation = () => {
             <img src="images/defaultUser.png" alt="Profile image" className='rounded-full text-white w-10 h-10' />
             <div className='text-white text-lg'>{(conversationData?.groupName == 'None') ? nickname : conversationData?.groupName}</div>
           </div>
-          <Link to={`/conversation/settings/${otherUsername}`}><FaBars className="text-white w-6 h-6" /></Link>
+          <Link to={otherUsername ? `/conversation/settings/${otherUsername}` : `/group/group-settings/${conversationData?._id}`}><FaBars className="text-white w-6 h-6" /></Link>
 
         </div>  
         <div>

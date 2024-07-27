@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Conversation = require('../../models/Conversation'); // Adjust the path as necessary
+const User = require('../../models/User');
 require('dotenv').config();
 
 const createGroupConversation = async (req, res) => {
@@ -12,8 +13,9 @@ const createGroupConversation = async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const users = [ decoded.username ];
-    const nickNames = [ decoded.username ];
+    const username = decoded.username;
+    const users = [ username ];
+    const nickNames = [ username ];
 
 
     if (users.length !== nickNames.length) {
@@ -21,6 +23,11 @@ const createGroupConversation = async (req, res) => {
     }
 
     try {
+        const user = await User.findOne({ username: username });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
         // Create a new conversation document
         const newConversation = new Conversation({
             users,
@@ -28,7 +35,10 @@ const createGroupConversation = async (req, res) => {
             groupName: groupName
         });
 
+        user.groups.push(newConversation._id);
+
         // Save the new conversation to the database
+        await user.save();
         await newConversation.save();
 
         res.status(201).json({ message: 'Group conversation created successfully', conversation: newConversation });
