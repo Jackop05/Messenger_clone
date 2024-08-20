@@ -38,13 +38,13 @@ const LoginPage = () => {
     };
 
     return (
-        <div className='bg-gray-900'>
-            <div className='w-full flex justify-end absolute'>
-                <Link to="/"><FaArrowRight className="text-white m-8 w-6 h-6" /></Link>
+        <div className='bg-gray-900 min-h-screen flex flex-col'>
+            <div className='w-full flex justify-end p-4'>
+                <Link to="/"><FaArrowRight className="text-white w-6 h-6" /></Link>
             </div>
-            <div className="min-h-screen flex items-center justify-center bg-gray-900">
-                <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm">
-                    <h1 className="text-white text-2xl font-bold mb-6 text-center">Login</h1>
+            <div className="flex-grow flex items-center justify-center px-4">
+                <div className="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm lg:max-w-md">
+                    <h1 className="text-white text-xl sm:text-2xl font-bold mb-6 text-center">Login</h1>
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <form onSubmit={handleLogin}>
                         <div className="mb-4">
@@ -69,7 +69,7 @@ const LoginPage = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="mb-10">
+                        <div className="mb-6 sm:mb-8">
                             <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="password">Password</label>
                             <input 
                                 id="password"

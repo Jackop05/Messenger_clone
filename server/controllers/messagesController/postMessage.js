@@ -41,6 +41,7 @@ async function postMessage(req, res) {
         }
 
         if (!conversation) {
+            console.log('working')
             // Create a new conversation if it doesn't exist
             conversation = new Conversation({
                 users: [currentUser.username, otherUser.username],

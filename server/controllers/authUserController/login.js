@@ -6,7 +6,7 @@ const User = require('../../models/User');
 require('dotenv').config();
 
 const router = express.Router();
-router.use(cookieParser());
+router.use(cookieParser()); 
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;

@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 
 
 const Conversation = () => {
+
     const bottomRef = useRef(null);
     const { otherUsername, groupId } = useParams();
     const [conversationData, setConversationsData] = useState();
     const [message, setMessage] = useState('');
     const [ userData, setUserData ] = useState('');
-
 
 
 
@@ -25,15 +25,15 @@ const Conversation = () => {
                 },
                 credentials: 'include'
             });
-
-
-            if (!response.ok) {
-                navigate('/login');
-                throw new Error(`Error occured while requesting for user data`);
-            }
-
             const data = await response.json();
-            setUserData(data.userData);
+
+            if (response.ok) {
+                navigate('/login');
+                setConversationsData(data[0]);
+                setUserData(data.userData);
+            } else {
+                console.error('Failed to fetch conversations:', data);
+            }
         } catch (error) {
             console.error('Error fetching user data:', error);
             return null;
@@ -56,8 +56,8 @@ const Conversation = () => {
                 },
                 credentials: 'include',
             });
-
             const data = await response.json();
+
             if (response.ok) {
                 setConversationsData(data[0]);
             } else {
@@ -94,7 +94,7 @@ const Conversation = () => {
   }
 
   const onSendClick = async () => {
-    const link = (conversationData.groupName != 'None') ? `http://localhost:5000/api/messages/post-group-messages/${conversationData._id}` : `http://localhost:5000/api/messages/post-messages/${otherUsername}`;
+    const link = (conversationData?.groupName != 'None' && conversationData?.groupName != undefined) ? `http://localhost:5000/api/messages/post-group-messages/${conversationData._id}` : `http://localhost:5000/api/messages/post-messages/${otherUsername}`;
 
     try {
         const response = await fetch(link, {
@@ -167,10 +167,10 @@ const Conversation = () => {
 
 
   let messagesArray = conversationData?.messages?.map((message) => {
-    const style = (userData.username != message.user) ? "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500" : "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600";
+    const style = (userData.username != message.user) ? "rounded-t-xl rounded-l-xl text-right self-end bg-blue-600" : "text-left rounded-t-xl rounded-r-xl self-start bg-gray-500";
 
     return (
-      <div className={`text-white text-[18px] py-2 px-4 max-w-[250px] ${style}`}>{message.text}</div>
+      <div className={`text-white text-[18px] py-2 px-4 max-w-[80vw] ${style}`}>{message.text}</div>
     )
   })
   if(!messagesArray) {
