@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 
+
+
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -9,9 +11,9 @@ const LoginPage = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
@@ -21,9 +23,7 @@ const LoginPage = () => {
                 body: JSON.stringify({ username, password }),
                 credentials: 'include'
             });
-
             const data = await response.json();
-
             if (response.ok) {
                 navigate('/');
             } else {
@@ -35,6 +35,8 @@ const LoginPage = () => {
         }
     };
 
+
+    
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col'>
             <div className='w-full flex justify-end p-4'>

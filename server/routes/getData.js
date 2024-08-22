@@ -13,6 +13,4 @@ router.get('/get-new-friends/:description', getNewFriends);
 router.get('/get-conversation-data', securePath, getConversationData);
 router.get('/suggested-users', securePath, getSuggestedUsers);
 
-
-
 module.exports = router;

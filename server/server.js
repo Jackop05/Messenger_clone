@@ -4,7 +4,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./database/MongoDBConnection'); 
 
-// Load environment variables
 dotenv.config();
 
 
@@ -12,15 +11,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json()); // Built-in middleware for parsing JSON
-app.use(cookieParser()); // Middleware for parsing cookies
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173', // replace with your client's URL
+    origin: 'http://localhost:5173', 
     credentials: true
 }));
 
-// Connect to MongoDB
 connectDB().then(() => {
     app.listen(port, () => {
         console.log(`Server running on port ${port}`);
@@ -40,8 +37,6 @@ app.use('/api/data', getDataRoutes);
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/messages', messageRoutes);
 
-
-// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send({ message: err.message });

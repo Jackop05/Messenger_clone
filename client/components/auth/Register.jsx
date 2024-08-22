@@ -9,9 +9,9 @@ const RegisterPage = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+
     const handleRegister = async (e) => {
         e.preventDefault();
-
         try {
             const response = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
@@ -20,8 +20,8 @@ const RegisterPage = () => {
                 },
                 body: JSON.stringify({ username, email, password }),
             });
-
             const data = await response.json();
+    
             if (response.ok) {
                 navigate('/login');
             } else {
@@ -33,6 +33,8 @@ const RegisterPage = () => {
         }
     };
 
+
+    
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col'>
             <div className='w-full flex justify-end p-4'>

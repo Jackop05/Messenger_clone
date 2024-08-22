@@ -2,9 +2,12 @@ import React from 'react';
 import { FaFacebook, FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+
+
 const ProfileSettings = () => {
     const navigate = useNavigate();
     const { username } = useParams();
+
 
     const handleClick = async () => {
         try {
@@ -15,7 +18,6 @@ const ProfileSettings = () => {
                 },
                 credentials: 'include'
             });
-            
             navigate('/login');
             if (!response.ok) {
                 throw new Error('Failed to log out. Please try again.');
@@ -25,6 +27,8 @@ const ProfileSettings = () => {
             console.error('Logout error:', error);
         }
     };
+
+
 
     return (
         <div className='bg-gray-900'>

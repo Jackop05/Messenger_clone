@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
+
 const UsersPreview = (props) => {
     const navigate = useNavigate();
     const searchUser = props.searchUser;
@@ -9,6 +11,7 @@ const UsersPreview = (props) => {
     const [newFriends, setNewFriends] = useState([]);
     const [conversationsData, setConversationsData] = useState([]);
 
+    
     const getUserData = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/data/get-user-data', {
@@ -18,7 +21,6 @@ const UsersPreview = (props) => {
                 },
                 credentials: 'include',
             });
-
             if (!response.ok) {
                 navigate('/login');
                 throw new Error('Error occurred while requesting user data');
@@ -26,11 +28,13 @@ const UsersPreview = (props) => {
 
             const data = await response.json();
             setUserData(data.userData);
+
         } catch (error) {
             console.error('Error fetching user data:', error);
             return null;
         }
     };
+
 
     const getNewFriends = async () => {
         try {
@@ -40,18 +44,19 @@ const UsersPreview = (props) => {
                     'Content-Type': 'application/json',
                 },
             });
-
             if (!response.ok) {
                 throw new Error('Error occurred while requesting user data');
             }
 
             const data = await response.json();
             setNewFriends(data);
+
         } catch (error) {
             console.error('Error fetching user data:', error);
             return null;
         }
     };
+
 
     const getConversationsData = async () => {
         try {
@@ -67,17 +72,18 @@ const UsersPreview = (props) => {
                 },
                 credentials: 'include',
             });
-
             const data = await response.json();
             if (response.ok) {
                 setConversationsData(data);
             } else {
                 console.error('Failed to fetch conversations:', data);
             }
+
         } catch (error) {
             console.error('Error fetching conversations:', error);
         }
     };
+
 
     useEffect(() => {
         getUserData();
@@ -94,6 +100,7 @@ const UsersPreview = (props) => {
             getConversationsData();
         }
     }, [userData]);
+
 
     const truncateMessage = (message, maxLength) => {
         if (message.length > maxLength) {
@@ -141,6 +148,7 @@ const UsersPreview = (props) => {
         );
     }
 
+
     const newFriendsArray = newFriends.map((name) => (
         <Link to={`/conversation/${name}`} key={name} className="flex gap-4">
             <img src="images/defaultUser.png" alt="Profile image" className="rounded-full w-12 h-12 sm:w-16 sm:h-16" />
@@ -150,6 +158,8 @@ const UsersPreview = (props) => {
         </Link>
     ));
 
+
+
     return (
         <div className="bg-black min-h-screen">
             {!searchUser && (
@@ -157,6 +167,7 @@ const UsersPreview = (props) => {
                     {conversationArray}
                 </div>
             )}
+
             {searchUser && (
                 <div className="flex flex-col gap-6 bg-black p-4 overflow-y-auto relative top-[114px] pb-20">
                     {newFriendsArray}

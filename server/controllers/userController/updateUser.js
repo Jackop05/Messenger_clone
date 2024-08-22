@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Adjust the path as necessary
+const User = require('../models/User'); 
+
+
 
 router.put('/updateUser/:userId', async (req, res) => {
     const userId = req.params.userId;
     const { username, email, firstName, profileImage } = req.body;
 
     try {
-        // Find the user by ID and update their fields
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { username, email, firstName, profileImage },

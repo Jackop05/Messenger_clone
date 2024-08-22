@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/User'); // Adjust the path as necessary
+const User = require('../../models/User'); 
 
 
 
@@ -8,18 +8,15 @@ const getSuggestedUsers = async (req, res) => {
     const { userId } = req.body;
 
     try {
-        // Get user's friends
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        const friends = user.friendsIdList;
 
-        // Limit to 5 random friends
+        const friends = user.friendsIdList;
         const maxDirectFriends = Math.min(friends.length, 5);
         const selectedDirectFriends = shuffleArray(friends).slice(0, maxDirectFriends);
 
-        // Get friends' friends (excluding user and direct friends)
         const friendsOfFriends = [];
         for (let friendId of selectedDirectFriends) {
             const friend = await User.findById(friendId);
@@ -29,14 +26,10 @@ const getSuggestedUsers = async (req, res) => {
             }
         }
 
-        // Limit to 5 random friends of friends
         const maxFriendsOfFriends = Math.min(friendsOfFriends.length, 5);
         const selectedFriendsOfFriends = shuffleArray(friendsOfFriends).slice(0, maxFriendsOfFriends);
-
-        // Combine and shuffle all selected userIds
         const suggestedUserIds = shuffleArray([...selectedDirectFriends, ...selectedFriendsOfFriends]);
 
-        // Fetch additional details (profileImage, username) for suggested users
         const suggestedUsers = [];
         for (let suggestedUserId of suggestedUserIds) {
             const suggestedUser = await User.findById(suggestedUserId);

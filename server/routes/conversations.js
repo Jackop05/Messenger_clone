@@ -12,6 +12,4 @@ router.post('/create-conversation', securePath, createGroup);
 router.post('/update-conversation', securePath, updateConversation);
 router.post('/add-user', securePath, addUser);
 
-
-
 module.exports = router;

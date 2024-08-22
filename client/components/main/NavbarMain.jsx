@@ -2,6 +2,8 @@ import React from 'react'
 import { FaBars, FaPen, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
+
 const NavbarMain = (props) => {
   return (
     <div className='bg-black p-4 fixed w-full z-50'>
@@ -14,6 +16,7 @@ const NavbarMain = (props) => {
           <FaPen className="text-blue-600 w-6 h-6 cursor-pointer" />
         </Link>
       </div>
+      
       <div className='w-full bg-gray-700 rounded-xl flex items-center p-2'>
         <FaSearch className="text-gray-400 w-5 h-5 sm:w-6 sm:h-6 mr-2" />
         <input 

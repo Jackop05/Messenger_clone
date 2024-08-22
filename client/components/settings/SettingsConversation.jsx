@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+
+
 const SettingsConversation = () => {
     const { otherUsername, groupId } = useParams();
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ const SettingsConversation = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [newUser, setNewUser] = useState('');
+
 
     const getUserData = async () => {
         try {
@@ -32,14 +35,12 @@ const SettingsConversation = () => {
 
             const data = await response.json();
             setUserData(data.userData);
+
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     };
 
-    useEffect(() => {
-        getUserData();
-    }, []);
 
     const handleSave = async () => {
         const username = userData.username;
@@ -67,6 +68,7 @@ const SettingsConversation = () => {
         }
     };
 
+
     const handleAddUser = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/conversations/add-user', {
@@ -77,18 +79,25 @@ const SettingsConversation = () => {
                 credentials: 'include',
                 body: JSON.stringify({ groupId, newUser }),
             });
-
             if (!response.ok) {
                 throw new Error('Failed to add new user.');
             }
 
             setSuccess('User added successfully.');
             setError(null);
+
         } catch (err) {
             setError(err.message);
             setSuccess(null);
         }
     };
+
+    
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+
 
     return (
         <div className='flex flex-col gap-4 w-full text-left'>
@@ -148,6 +157,7 @@ const SettingsConversation = () => {
                     </div>
                 </div>
             </div>
+
             {groupId && (
                 <div className='flex flex-col gap-4'>
                     <div className='text-md font-bold text-gray-600 mb-2'>Add User to Group</div>

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
+
+
 const SuggestedUsers = (props) => {
   const display = !props.searchUser;
-
   const [userData, setUserData] = useState('');
+
 
   const getUserData = async () => {
     try {
@@ -15,7 +17,6 @@ const SuggestedUsers = (props) => {
         },
         credentials: 'include',
       });
-
       if (!response.ok) {
         navigate('/login');
         throw new Error('Error occurred while requesting user data');
@@ -23,22 +24,24 @@ const SuggestedUsers = (props) => {
 
       const data = await response.json();
       setUserData(data.userData);
+
     } catch (error) {
       console.error('Error fetching user data:', error);
       return null;
     }
   };
 
+
   useEffect(() => {
     getUserData();
   }, []);
+
 
   const usedIndices = new Set();
   let suggestedArray = [];
   while (suggestedArray.length < 10 && suggestedArray.length < userData?.friendsIdList?.length) {
     const randomIndex = Math.floor(Math.random() * userData?.friendsIdList?.length);
 
-    // Ensure we do not pick the same index more than once
     if (!usedIndices.has(randomIndex)) {
       suggestedArray.push(userData?.friendsIdList[randomIndex]);
       usedIndices.add(randomIndex);
@@ -53,6 +56,8 @@ const SuggestedUsers = (props) => {
       </Link>
     );
   });
+
+
 
   return (
     <div>

@@ -2,6 +2,8 @@ import React from 'react';
 import { FaUser, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
+
 const FooterMain = (props) => {
   return (
     <div className='bg-dark-transparent backdrop-blur-sm z-50 fixed bottom-0 flex justify-around items-center w-full p-2 sm:p-4 lg:justify-center'>

@@ -12,6 +12,4 @@ router.post('/login', login);
 router.post('/register', register);
 router.post('/logout', securePath, logout);
 
-
-
 module.exports = router;

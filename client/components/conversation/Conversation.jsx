@@ -14,7 +14,6 @@ const Conversation = () => {
     const [ userData, setUserData ] = useState('');
 
 
-
     const getUserData = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/data/get-user-data', {
@@ -80,8 +79,8 @@ const Conversation = () => {
                 },
                 credentials: 'include',
             });
-
             const data = await response.json();
+            
             if (response.ok) {
                 setConversationsData(data[0]);
             } else {
@@ -106,7 +105,6 @@ const Conversation = () => {
             body: JSON.stringify({ text: message }),
         });
         const data = await response.json();
-
         if (response.ok) {
             console.log('Message sent successfully:', data.newMessage);
             setMessage('');
@@ -194,8 +192,8 @@ const Conversation = () => {
             <div className='text-white text-lg'>{(conversationData?.groupName == 'None') ? nickname : conversationData?.groupName}</div>
           </div>
           <Link to={otherUsername ? `/conversation/settings/${otherUsername}` : `/group/group-settings/${conversationData?._id}`}><FaBars className="text-white w-6 h-6" /></Link>
-
         </div>  
+        
         <div>
             <div className='bg-gray-200 h-screen-conversation relative top-[72px] overflow-x-hidden overflow-y-scroll px-8 py-2 flex flex-col gap-3 w-full'>
                 {messagesArray}

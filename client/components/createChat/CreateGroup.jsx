@@ -6,11 +6,11 @@ const CreateGroup = () => {
     const [groupName, setGroupName] = useState('');
     const [message, setMessage] = useState('');
 
-
     
     const handleInputChange = (e) => {
         setGroupName(e.target.value);
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,17 +23,19 @@ const CreateGroup = () => {
                 body: JSON.stringify({ groupName }),
                 credentials: 'include',
             });
-
             const data = await response.json();
             if (response.ok) {
                 setMessage(data.message);
             } else {
                 setMessage('Error creating group: ' + data.message);
             }
+
         } catch (error) {
             setMessage('Error creating group: ' + error.message);
         }
     };
+
+
 
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col items-center justify-center'>
@@ -55,9 +57,7 @@ const CreateGroup = () => {
                         className='p-3 rounded-md bg-gray-700 text-white border border-gray-600 outline-none'
                         placeholder="Enter Group Name..."
                     />
-                    <button type="submit" className='text-md text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md'>
-                        Create Group
-                    </button>
+                    <button type="submit" className='text-md text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md'>Create Group</button>
                     {message && <p className='text-md text-green-500 text-center mt-4'>{message}</p>}
                 </form>
             </div>
