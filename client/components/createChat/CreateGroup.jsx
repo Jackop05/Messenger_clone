@@ -6,6 +6,8 @@ const CreateGroup = () => {
     const [groupName, setGroupName] = useState('');
     const [message, setMessage] = useState('');
 
+
+    
     const handleInputChange = (e) => {
         setGroupName(e.target.value);
     };

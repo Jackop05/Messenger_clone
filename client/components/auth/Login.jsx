@@ -25,10 +25,8 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Login successful, redirect to profile page
                 navigate('/');
             } else {
-                // Display error message
                 setError(data.message);
             }
         } catch (error) {
@@ -84,15 +82,11 @@ const LoginPage = () => {
                             <button 
                                 type="submit"
                                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                Sign In
-                            </button>
+                            >Sign In</button>
                         </div>
                     </form>
                     <div className="text-center mt-4">
-                        <Link to="/register" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                            Don't have an account? Register
-                        </Link>
+                        <Link to="/register" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Don't have an account? Register</Link>
                     </div>
                 </div>
             </div>

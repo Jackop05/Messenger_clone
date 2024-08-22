@@ -9,12 +9,6 @@ const FooterMain = (props) => {
         <FaEnvelope className='text-white w-6 h-6 sm:w-8 sm:h-8' />
         <div className='text-xs sm:text-sm text-center text-white mt-1' onClick={props.handleChatsClick}>Chats</div>
       </div>
-      <div className='flex flex-col items-center mx-4 lg:mx-8'>
-        <FaUser className='text-white w-6 h-6 sm:w-8 sm:h-8' />
-        <Link to="/">
-          <div className='text-xs sm:text-sm text-center text-white mt-1'>New Users</div>
-        </Link>
-      </div>
     </div>
   )
 }

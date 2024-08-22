@@ -22,11 +22,9 @@ const RegisterPage = () => {
             });
 
             const data = await response.json();
-
             if (response.ok) {
                 navigate('/login');
             } else {
-                // Display error message
                 setError(data.message);
             }
         } catch (error) {
@@ -82,12 +80,8 @@ const RegisterPage = () => {
                             <button 
                                 type="submit"
                                 className="mb-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                Register
-                            </button>
-                            <Link to="/login" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                                Already have an account? Login
-                            </Link>
+                            >Register</button>
+                            <Link to="/login" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Already have an account? Login</Link>
                         </div>
                     </form>
                 </div>

@@ -8,7 +8,6 @@ async function postMessage(req, res) {
     const { otherUsername, groupId } = req.params; // The username of the other participant
     const { text } = req.body;
     const token = req.cookies.jwt;
-    console.log('Important: ', text, otherUsername, groupId)
 
     try {
         if (!token) {
@@ -20,7 +19,7 @@ async function postMessage(req, res) {
 
         // Find both users by their usernames
         const currentUser = await User.findOne({ username });
-        const otherUser = await User.findOne({ username: otherUsername });
+        const otherUser = otherUsername ? await User.findOne({ username: otherUsername }) : null;
 
         if ((!currentUser || !otherUser) && otherUsername) {
             return res.status(404).json({ error: 'User not found' });
@@ -33,38 +32,36 @@ async function postMessage(req, res) {
                 users: { $all: [currentUser.username, otherUser.username] }
             });
         } else if(groupId){
-            conversation = await Conversation.find({
-                _id: { $all: groupId },
+            conversation = await Conversation.findOne({
+                _id: groupId,
                 users: currentUser.username
             });
-            conversation = conversation[0];
         }
 
         if (!conversation) {
-            console.log('working')
             // Create a new conversation if it doesn't exist
             conversation = new Conversation({
                 users: [currentUser.username, otherUser.username],
                 messages: []
             });
             
-            
             // Save the new conversation
             await conversation.save();
-            
 
             // Add the conversation ID to both users' conversations arrays
-            currentUser.conversations.push(username.username);
-            if(otherUsername){
-                otherUser.conversations.push(otherUser.username);
+            currentUser.conversations.push(conversation._id);
+            otherUser.conversations.push(conversation._id);
+
+            // Add each user to the other's friendsIdList if they aren't already friends
+            if (!currentUser.friendsIdList.includes(otherUser.username)) {
+                currentUser.friendsIdList.push(otherUser.username);
             }
-            
+            if (!otherUser.friendsIdList.includes(currentUser.username)) {
+                otherUser.friendsIdList.push(currentUser.username);
+            }
 
             await currentUser.save();
-            if(otherUsername){
-                await otherUser.save();
-            }
-            
+            await otherUser.save();
         }
 
         // Create a new message
@@ -75,13 +72,8 @@ async function postMessage(req, res) {
             status: 'Sent',
         };
 
-        console.log(newMessage);
-
         // Add the new message to the conversation's messages array
         conversation.messages.push(newMessage);
-        
-        
-        
 
         // Save the conversation with the new message
         await conversation.save();
@@ -92,5 +84,6 @@ async function postMessage(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
 
 module.exports = postMessage;
