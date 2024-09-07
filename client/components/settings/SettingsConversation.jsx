@@ -101,7 +101,7 @@ const SettingsConversation = () => {
 
     return (
         <div className='flex flex-col gap-4 w-full text-left'>
-            <div className='mb-4'>
+            <div className='mb-4 max-w-[900px] w-full mx-auto'>
                 <div className='text-md font-bold text-gray-600 mb-2'>Customization</div>
                 <div className='flex flex-col gap-3 bg-gray-900 p-4 rounded-xl'>
                     <div className='w-full flex justify-start gap-3 border-b border-gray-700 pb-3'>
@@ -183,7 +183,7 @@ const SettingsConversation = () => {
             {(isEditingNickname || isEditingQuickEmoji || isEditingThemeColor) && (
                 <button
                     onClick={handleSave}
-                    className='bg-blue-500 text-white py-2 px-4 rounded'
+                    className='bg-blue-500 text-white py-2 px-4 rounded max-w-[900px] w-full mx-auto'
                 >
                     Save Changes
                 </button>

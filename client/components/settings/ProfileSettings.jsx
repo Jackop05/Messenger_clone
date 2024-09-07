@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaFacebook, FaBell, FaArrowLeft } from 'react-icons/fa';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { FaFacebook, FaArrowLeft } from 'react-icons/fa';
+import { Link, useParams } from 'react-router-dom';
 import SettingsConversation from './SettingsConversation';
 
 
