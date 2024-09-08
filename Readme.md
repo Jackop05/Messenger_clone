@@ -5,7 +5,7 @@ The **Messenger Clone** is a modern chat application built using `React` and `No
 
 ## 💡 Features
 - **Real-time Messaging:**  
-  Engage in live conversations with friends, with instant message delivery powered by `Socket.io`.
+  Engage in live conversations with friends, with instant message delivery.
 - **Secure Authentication:**  
   Users can register, log in, and securely manage their account details using `JWT` authentication.
 - **Rich Media Support:**  
