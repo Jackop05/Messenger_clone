@@ -18,7 +18,6 @@ The **Messenger Clone** is a modern chat application built using `React` and `No
 ## 🛠️ Tech Stack
 - **React:** JavaScript library for building user interfaces.
 - **Node.js & Express.js:** Backend server handling API requests and real-time communication.
-- **Socket.io:** Enables real-time, bidirectional event-based communication between client and server.
 - **MongoDB:** NoSQL database for storing user data and chat history.
 - **JWT (JSON Web Tokens):** Secure authentication method for user sessions.
 - **Tailwind CSS:** Utility-first CSS framework for designing a responsive and modern interface.
