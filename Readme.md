@@ -3,6 +3,8 @@
 ## 📝 Project Overview
 The **Messenger Clone** is a modern chat application built using `React` and `Node.js`, allowing users to communicate in real time with friends and family. This clone replicates the core functionality of popular messaging platforms, providing a seamless and engaging messaging experience. 
 
+![image](https://github.com/user-attachments/assets/34af94cd-a47f-4d03-9844-8897e0369963)
+
 ## 💡 Features
 - **Real-time Messaging:**  
   Engage in live conversations with friends, with instant message delivery.
